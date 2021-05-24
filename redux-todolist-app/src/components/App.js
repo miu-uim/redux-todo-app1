@@ -1,10 +1,9 @@
 import React,{useState} from 'react';
 import {connect} from 'react-redux';
 
-import {addTodo,deleteTodo,doneTodo} from '../actions'
+import {addTodo,deleteTodo,doneTodo} from '../actions'//actionCreater関数
 
 const App =(props)=>{
-
   const[taskItem,setTask]= useState('')
   // const[todos,setTodos]=useState('')
 
@@ -25,6 +24,10 @@ const App =(props)=>{
     //setTodos(newTodos)
   }
 
+  const doneTask = (index)=>{
+    props.doneTodo(index)
+  }
+
 
 
   return (
@@ -34,7 +37,11 @@ const App =(props)=>{
       <button onClick={addTask}>追加</button>
       <ul>
         {props.todos.map((todo,index)=>(
-          <li key={index}>{todo.title}<button onClick={()=>{deleteTask(index)}}>削除</button></li>
+          <li key={index}>
+            {todo.flg ? <del>{todo.title}</del> : <span>{todo.title}</span>}
+            {todo.flg ? <button onClick={()=>{doneTask(index)}}>未完了</button> :<button onClick={()=>{doneTask(index)}}>完了</button> }
+            <button onClick={()=>{deleteTask(index)}}>削除</button>
+          </li>
         ))}
       </ul>
     </React.Fragment>
